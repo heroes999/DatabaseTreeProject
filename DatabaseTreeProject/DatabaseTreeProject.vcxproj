@@ -79,8 +79,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DatabaseTree.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="TreeNodeId.h" />
+    <ClInclude Include="TreeNodeIdService.h" />
+    <ClInclude Include="TreeNodeService.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatabaseTreeProject.cpp" />

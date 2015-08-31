@@ -6,6 +6,7 @@
 #include "TreeNodeId.h"
 #include "TreeNodeIdService.h"
 #include "TreeNodeService.h"
+#include "DatabaseTree.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -23,6 +24,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	auto pNode1 = tnSrv.getTreeNode(id2);
 	tnSrv.unregisterTreeNode(id1);
 	tnSrv.unregisterTreeNode(id2);
+
+	DatabaseTree<int> dt;
 	return 0;
 }
 

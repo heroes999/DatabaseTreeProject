@@ -30,6 +30,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	rootId = dt.createRootNode(1);
 	rootId = dt.createRootNode(2);
 	rootId = dt.getRootNode();
+	TreeNodeId node1 = dt.addNode(rootId, 2);
+	TreeNodeId node2 = dt.addNode(rootId, 3);
+	TreeNodeId node3 = dt.addNode(node1, 4);
 	return 0;
 }
 

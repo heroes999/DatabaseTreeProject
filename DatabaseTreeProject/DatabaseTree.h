@@ -69,3 +69,30 @@ TreeNodeId DatabaseTree<T>::createRootNode(const T& content)
 
 	return rootNodeId;
 }
+
+template <class T>
+TreeNodeId DatabaseTree<T>::addNode(TreeNodeId parentId, const T& content)
+{
+	TreeNode<T>* pParentNode = m_pTreeNodeService->getTreeNode(parentId);
+	if (pParentNode == NULL)
+		return m_pTreeNodeIdService->generateNullId();
+
+	TreeNodeId newNodeId = m_pTreeNodeIdService->generateTreeNodeId();
+	TreeNode<T>* pNewNode = new TreeNode<T>(pParentNode->m_rgt, pParentNode->m_rgt + 1, pParentNode->m_layer + 1, content);
+	m_pTreeNodeService->registerTreeNode(newNodeId, pNewNode);
+
+	int rgtThreshold = pParentNode->m_rgt;
+	std::for_each(m_nodes.begin(), m_nodes.end(), [this, rgtThreshold](TreeNodeId nodeId) {
+		TreeNode<T>* pNode = m_pTreeNodeService->getTreeNode(nodeId);
+		if (pNode == NULL)
+			return;
+
+		if (pNode->m_rgt >= rgtThreshold)
+			pNode->m_rgt += 2;
+		if (pNode->m_lft >= rgtThreshold)
+			pNode->m_lft += 2;
+	});
+
+	m_nodes.push_back(newNodeId);
+	return newNodeId;
+}

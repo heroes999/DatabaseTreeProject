@@ -4,6 +4,10 @@
 #include "TreeNodeId.h"
 #include "TreeNode.h"
 
+/*
+ * TreeNodeService is actually a K-V storage for tree nodes.
+ * It is responsible for memory management for all registered tree nodes
+ */
 template <class T>
 class TreeNodeService
 {

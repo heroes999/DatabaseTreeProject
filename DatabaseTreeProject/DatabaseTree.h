@@ -96,3 +96,32 @@ TreeNodeId DatabaseTree<T>::addNode(TreeNodeId parentId, const T& content)
 	m_nodes.push_back(newNodeId);
 	return newNodeId;
 }
+
+template <class T>
+bool DatabaseTree<T>::deleteNode(TreeNodeId nodeId)
+{
+	TreeNode<T>* pDelNode = m_pTreeNodeService->getTreeNode(nodeId);
+	if (pDelNode == NULL)
+		return false;
+
+	auto iter = std::find_if(m_nodes.begin(), m_nodes.end(), [nodeId](TreeNodeId id){
+		if (id == nodeId)
+			return true;
+		return false;
+	});
+	m_nodes.erase(iter);
+
+	int rgtThreshold = pDelNode->m_rgt;
+	std::for_each(m_nodes.begin(), m_nodes.end(), [this, rgtThreshold](TreeNodeId nodeId) {
+		TreeNode<T>* pNode = m_pTreeNodeService->getTreeNode(nodeId);
+		if (pNode == NULL)
+			return;
+
+		if (pNode->m_rgt > rgtThreshold)
+			pNode->m_rgt -= 2;
+		if (pNode->m_lft >= rgtThreshold)
+			pNode->m_lft -= 2;
+	});
+
+	m_pTreeNodeService->unregisterTreeNode(nodeId);
+}

@@ -33,6 +33,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	TreeNodeId node1 = dt.addNode(rootId, 2);
 	TreeNodeId node2 = dt.addNode(rootId, 3);
 	TreeNodeId node3 = dt.addNode(node1, 4);
+	dt.deleteNode(node3);
+	dt.deleteNode(node2);
+	dt.deleteNode(node1);
+	dt.addNode(rootId, 2);
 	return 0;
 }
 

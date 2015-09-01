@@ -20,6 +20,7 @@ public:
 	}
 
 	TreeNodeId createRootNode(const T& content);
+	TreeNodeId getRootNode();
 	TreeNodeId addNode(TreeNodeId parentId, const T& content);
 	bool deleteNode(TreeNodeId nodeId);
 	bool moveNodeTo(TreeNodeId nodeId, TreeNodeId newParentId);

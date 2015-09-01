@@ -26,6 +26,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	tnSrv.unregisterTreeNode(id2);
 
 	DatabaseTree<int> dt;
+	TreeNodeId rootId = dt.getRootNode();
+	rootId = dt.createRootNode(1);
+	rootId = dt.createRootNode(2);
+	rootId = dt.getRootNode();
 	return 0;
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <algorithm>
 #include "TreeNodeIdService.h"
 #include "TreeNodeService.h"
 
@@ -35,3 +36,36 @@ private:
 	TreeNodeIdService* m_pTreeNodeIdService;
 	TreeNodeService<T>* m_pTreeNodeService;
 };
+
+template <class T>
+TreeNodeId DatabaseTree<T>::getRootNode()
+{
+	if (m_nodes.empty())
+		return m_pTreeNodeIdService->generateNullId();
+
+	auto iter = std::find_if(m_nodes.begin(), m_nodes.end(), [this](TreeNodeId nodeId){
+		TreeNode<T>* pNode = m_pTreeNodeService->getTreeNode(nodeId);
+		if (pNode && pNode->m_lft == 1)
+			return true;
+		return false;
+	});
+
+	if (iter == m_nodes.end())
+		return m_pTreeNodeIdService->generateNullId();
+
+	return *iter;
+}
+
+template <class T>
+TreeNodeId DatabaseTree<T>::createRootNode(const T& content)
+{
+	if (!m_nodes.empty())
+		return getRootNode();
+
+	TreeNodeId	rootNodeId = m_pTreeNodeIdService->generateTreeNodeId();
+	TreeNode<T>* pRoot = new TreeNode<T>(1, 2, 1, content);
+	m_pTreeNodeService->registerTreeNode(rootNodeId, pRoot);
+	m_nodes.push_back(rootNodeId);
+
+	return rootNodeId;
+}

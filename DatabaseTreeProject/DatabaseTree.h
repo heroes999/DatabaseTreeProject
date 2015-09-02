@@ -11,7 +11,8 @@ class DatabaseTree
 public:
 	DatabaseTree():
 		m_pTreeNodeIdService(new TreeNodeIdService),
-		m_pTreeNodeService(new TreeNodeService<T>)
+		m_pTreeNodeService(new TreeNodeService<T>),
+		m_rootId(NullTreeNodeId())
 	{
 	}
 
@@ -49,7 +50,7 @@ TreeNodeId DatabaseTree<T>::getRootNode()
 		return m_rootId;
 	else
 	{
-		m_rootId = m_pTreeNodeIdService->generateNullId();
+		m_rootId = NullTreeNodeId();
 		return m_rootId;
 	}
 }
@@ -61,7 +62,7 @@ TreeNodeId DatabaseTree<T>::createRootNode(const T& content)
 		return m_rootId;
 
 	m_rootId = m_pTreeNodeIdService->generateTreeNodeId();
-	TreeNode<T>* pRoot = new TreeNode<T>(m_pTreeNodeIdService->generateNullId(), content);
+	TreeNode<T>* pRoot = new TreeNode<T>(NullTreeNodeId(), content);
 	m_pTreeNodeService->registerTreeNode(m_rootId, pRoot);
 
 	return m_rootId;
@@ -72,7 +73,7 @@ TreeNodeId DatabaseTree<T>::addNode(TreeNodeId parentId, const T& content)
 {
 	TreeNode<T>* pParentNode = m_pTreeNodeService->getTreeNode(parentId);
 	if (pParentNode == NULL)
-		return m_pTreeNodeIdService->generateNullId();
+		return NullTreeNodeId();
 
 	TreeNodeId newNodeId = m_pTreeNodeIdService->generateTreeNodeId();
 	TreeNode<T>* pNewNode = new TreeNode<T>(parentId, content);

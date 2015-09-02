@@ -40,11 +40,16 @@ public:
 		return !(*this == id);
 	}
 
-	TreeNodeId(): m_id(0) {}
-
-private:
+protected:
 	TreeNodeId(ULL id): m_id(id) {}
 
 private:
 	ULL m_id;
+};
+
+class NullTreeNodeId: public TreeNodeId
+{
+public:
+	NullTreeNodeId(): TreeNodeId(0x0)
+	{}
 };

@@ -5,9 +5,9 @@ class TreeNodeId
 	friend class TreeNodeIdService;
 	typedef unsigned long long ULL;
 public:
-	bool isValid()
+	bool isNull()
 	{
-		return m_id > 0x0;
+		return m_id == 0x0;
 	}
 
 	bool operator<(const TreeNodeId& id) const
@@ -40,8 +40,10 @@ public:
 		return !(*this == id);
 	}
 
+	TreeNodeId(): m_id(0) {}
+
 private:
-	TreeNodeId(ULL id = 0x0): m_id(id) {}
+	TreeNodeId(ULL id): m_id(id) {}
 
 private:
 	ULL m_id;
